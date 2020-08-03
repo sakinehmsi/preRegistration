@@ -1,0 +1,297 @@
+
+@font-face {
+    font-family: 'BNarm';
+    src: url('BNarm.eot?#') format('eot'),
+    url('BNarm.ttf') format('truetype'),
+    url('BNarm.woff') format('woff');
+}
+@font-face {
+  font-family: 'BioRhyme';
+  font-style: normal;
+  font-weight: 400;
+  src: local('BioRhyme'), local('BioRhyme-Regular'), url('BioRhyme.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+body {
+    font-family: 'BNarm' !important;
+    font-weight: 100;
+    text-align: -webkit-center;
+    overflow-y: auto;
+    direction: rtl !important;
+}
+a, p, button, h {
+	font-family: 'BNarm';
+}
+.znu-name{
+    font-family: 'BNarm';
+    padding-top: 25px;
+    padding-right: 10px;
+    font-size: 28px;
+    width: fit-content;
+    height: fit-content;
+    float: right;
+    color: white;
+    cursor: default;
+}
+body::-webkit-scrollbar {
+    width: 10px;
+    float: left;
+}
+
+body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgb(10, 48, 78);
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #546b7d;
+}
+
+body{
+    margin: 0px !important;
+    background-color: #f5f5f5 ;
+    width: 100%;
+}
+/* use in js */
+.disable{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/*   HEADER */
+.head-container{
+    width: 100%;
+}
+.page-banner-top{
+    display: block;
+    height: 90px;
+    background-color: #072339;
+    width: 100%;
+}
+
+.page-logo{
+    display: block;
+    float: right;
+    background: no-repeat;
+    direction: rtl;
+}
+
+.ZNUlogo{
+    height: 70px;
+    width: 78px;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+/* Navbar */
+.navbar{
+    background-color: #eeeeee;
+    height: 50px;
+    margin-left:52.500px;
+    margin-right:52.500px;
+    width: 92%;
+}
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #0a304e;
+    height: 60px;
+    z-index: 1;
+}
+.page-menu{
+    float: right;
+    height: 86%;
+    margin: 0px !important;
+    color: white;
+    direction: rtl;
+    z-index: 1;
+    padding: 7px 25px 0px 0px !important;
+}
+.newmenu{
+    float: right;
+    height: 86%;
+    padding: 0px;
+    margin: 0px !important;
+    direction: rtl;
+    z-index: 1;
+    padding: 7px 25px 0px 0px !important;
+}
+.page-menu a{
+    color: #072339;
+    text-decoration: none;
+    cursor: pointer; 
+    font-size: 20px; 
+    padding-bottom: 7px;
+}
+.newmenu a{
+    color: white;
+    text-decoration: none;
+    cursor: pointer; 
+    font-size: 20px; 
+    padding-bottom: 7px;
+}
+.page-menu li{
+    display: inline-block;
+    text-align: right;
+    padding: 0px 15px; 
+    height: 100%;
+}
+.page-menu a:hover{color: rgb(31, 225, 231);}
+.newmenu li{
+    display: inline-block;
+    text-align: right;
+    padding: 0px 15px;
+    height: 100%;
+}
+.newmenu a:hover{color: rgb(31, 225, 231);}
+/* Page Date*/
+.page-date{
+    height: 86%;  
+    float: left;
+    padding-top:7px ;
+    direction: ltr;
+}
+.newdate{
+    height: 86%;  
+    float: left;
+    padding-top:7px ;
+}
+.page-date #date{
+    color: #072339;
+    cursor: default;
+    font-size: 20px; 
+    margin: 0 !important;
+    float: left;
+    padding-left: 25px;
+}
+.newdate #date{
+    color: white; 
+    cursor: default;
+    font-size: 20px; 
+    margin: 0 !important;
+    float: left;
+    padding-left: 25px;
+    direction: ltr;
+}
+
+/* Profile Menu */
+.dropdownBtn {
+    text-align: right;
+    height: 100%;
+}
+.dropdown {
+    text-align: right;
+    padding: 0px 15px;
+    height: 100%;
+    position: relative;
+}
+.dropdown:hover .dropdown_content {display: grid;}
+
+.new_dropdown {
+    text-align: right;
+    padding: 0px 15px;
+    height: 100%;
+    position: relative;
+}
+.new_dropdown:hover .new_dropdown_content {display: grid;}
+
+.dropdown_content {
+    display: none;
+    position: absolute;
+    top: 34px !important;
+    right: 0px !important;
+    background-color: #eeeeee !important;
+    width: max-content;
+    overflow: auto;
+    z-index: 1 !important;
+}
+.dropdown_content a:hover {color: rgb(31, 225, 231);}
+.new_dropdown_content {
+    display: none;
+    position: absolute;
+    top: 34px !important;
+    right: 0px !important;
+    background-color: #0a304e !important;
+    width: max-content;
+    overflow: auto;
+    z-index: 1 !important;
+}
+.new_dropdown_content a:hover {color: rgb(31, 225, 231);}
+.dropdown_content a {
+    color: #072339;
+    padding: 4.5px 10px ;
+    text-decoration: none;
+    display: block;
+    font-weight: normal;
+}
+.new_dropdown_content a {
+    color: white ;
+    padding:9px 10px ;
+    text-decoration: none;
+    display: block;
+    font-weight: normal;
+}
+/*  END HEADER */
+
+/* FOOTER */
+.page-footer{
+    background-color: #f5f5f5;
+    width: 92%;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.footer_info{
+    display: initial;
+    direction: rtl;
+    float: right;
+    text-align: right;
+    margin: 0px !important;
+    cursor: default;
+}
+.footer_info i{
+    padding-left: 15px;
+    padding-top: 10px;
+}
+.footer-logo-div{
+    margin: 0px !important;
+    max-inline-size: max-content;
+}
+.footerLogo{
+    width: 129px;
+    position: relative;
+    height: fit-content;
+}
+.znu_email_css{
+    font-weight: large;
+    font-size: initial;
+    font-family: 'BioRhyme';
+}
+/* END FOOTER */
+
+/* MAIN BODY */
+.main-container{
+    margin-left:52.500px;
+    margin-right:52.500px;
+    /* background-color: white; */
+    padding-top: 20px;
+    text-align: center;
+    padding-bottom: 20px;
+    width: 92%;
+    background: #072339; 
+    /* background-image: url(../images/indexBackground.jpg); */
+    background: -webkit-linear-gradient(to right, #072339, #66b5bf);  
+    background: linear-gradient(to right, #072339, #66b5bf);
+}
+/* swal */
+.swal2-styled.swal2-confirm {
+    border: 0 !important;
+    border-radius: 12px !important;
+    background-color: #324f67 !important;
+    color: #fff !important;
+    font-size: initial !important;
+    font-weight: initial !important;
+    width: 15% !important;
+    text-align: center !important;
+    padding: 9px 5px !important;
+    box-shadow: none !important;
+}

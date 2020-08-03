@@ -1,0 +1,103 @@
+/* Toggle hide/show - no Js
+--------------------------------*/
+@font-face {
+    font-family: 'IranSans';
+    font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+    src:  url('IranianSans.ttf') format('truetype'); 
+}
+@font-face {
+    font-family: 'IranNastaliq';
+    src: url('IranNastaliq.eot?#') format('eot'),
+    url('IranNastaliq.ttf') format('truetype'),
+    url('IranNastaliq.woff') format('woff');
+    }
+.toggle-box-region {background-color:#fff; border:1px solid #d9d9d9; padding:14px 16px;margin-top: 40px;margin-right: 40px;margin-left: 40px; 
+  margin-bottom: 35px;}
+.toggle-box {display:none; }
+.toggle-box + label {
+  direction: rtl;
+  color:#555;
+  cursor:pointer;
+  display:block;
+  font-weight:bold;
+  line-height:30px;
+  font-size: 25px;
+
+  padding:10px 0 1em 30px;
+  position:relative;
+  margin-left: 1099px;
+  font-family: 'IranNastaliq'; 
+}
+#chart{
+  width: 100%;
+  margin-top: 20px;
+  margin-right: 15px;
+  padding-left: 58px;
+  margin-bottom: 20px;
+  margin-left: 15px;
+}
+#chart td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  margin: 5px;
+
+  
+}
+
+#chart tr:nth-child(even){background-color: #f2f2f2;}
+
+
+.toggle-box + label + div {display:none; margin:0 0 14px;}
+.toggle-box:checked + label:nth-child(n) + div {display:block;}
+
+.toggle-box + label:before {
+  position:absolute;
+  content:"\f0fe";
+  font-family:FontAwesome;
+  top:.3em;
+  left:0px;
+  color:#0085a6;
+}
+.toggle-box:checked + label {color:#0085a6;}
+.toggle-box:checked + label:before {content:"\f146";}
+.toggle-box-content {border-bottom:5px double #41414f; color:#000; padding:10px 5em 6em 10px;}
+
+/* General */
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+      box-sizing: border-box;
+}
+padding: 13px 25px;
+
+.box-test {
+  padding:3em;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.selected{
+    background-color: #e1e9ef;
+}
+.mystyle {
+ 
+  background-color: coral;
+  color: white;
+  font-size: 25px;
+}
