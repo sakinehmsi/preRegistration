@@ -31,7 +31,7 @@
   font-family: 'IranNastaliq'; 
 }
 #chart{
-  width: 100%;
+  width: 97%;
   margin-top: 20px;
   margin-right: 15px;
   padding-left: 58px;
@@ -39,15 +39,27 @@
   margin-left: 15px;
 }
 #chart td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  padding: 0em 0.2em;
   text-align: center;
-  margin: 5px;
-
-  
+  margin: 0px;
+  font-size: 1.4em;
+  font-family: 'BMitra';
+  cursor: grabbing;
+  background-color: rgb(246 248 249); 
 }
-
-#chart tr:nth-child(even){background-color: #f2f2f2;}
+#chart th{
+  font-family: 'BMitra';
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.3em;
+  color: #072339;
+  background-color: white;
+  width: 10%;
+}
+#chart tr{
+  width: 100%;
+}
+/* #chart tr:nth-child(even){background-color: #f2f2f2;} */
 
 
 .toggle-box + label + div {display:none; margin:0 0 14px;}
@@ -93,11 +105,110 @@ tr:nth-child(even) {
 }
 
 .selected{
-    background-color: #e1e9ef;
+  background-color: green !important;
 }
 .mystyle {
  
   background-color: coral;
   color: white;
   font-size: 25px;
+}
+/* public */
+.toggle-box-region {
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  padding: 14px 16px;
+  margin-top: 40px;
+  margin-right: 40px;
+  margin-left: 40px;
+  margin-bottom: 35px;
+}
+
+.toggle-box {
+  display: none;
+}
+
+.toggle-box+label {
+  direction: rtl;
+  color: #555;
+  cursor: pointer;
+  display: block;
+  font-weight: bold;
+  line-height: 30px;
+  font-size: 25px;
+
+  padding: 10px 0 1em 40px;
+  position: relative;
+  margin-left: 930px;
+  font-family: 'IranNastaliq';
+}
+
+.toggle-box+label+div {
+  display: none;
+  margin: 0 0 14px;
+}
+
+.toggle-box:checked+label:nth-child(n)+div {
+  display: block;
+}
+
+.toggle-box+label:before {
+  position: absolute;
+  content: "\f0fe";
+  font-family: FontAwesome;
+  top: .3em;
+  left: 0px;
+  color: #0085a6;
+}
+
+.toggle-box:checked+label {
+  color: #0085a6;
+}
+
+.toggle-box:checked+label:before {
+  content: "\f146";
+}
+
+.toggle-box-content {
+  border-bottom: 5px double #41414f;
+  color: #000;
+  padding: 10px 5em 6em 80px;
+}
+
+/* General */
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* 
+padding: 13px 25px; */
+
+.box-test {
+  padding: 3em;
+}
+
+
+.button1 {
+  font-family: 'IranNastaliq';
+
+
+  padding: 12px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+
+  cursor: pointer;
+  border-radius: 12px;
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
+
+  position: relative;
+  float: right;
 }

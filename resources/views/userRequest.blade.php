@@ -158,7 +158,7 @@
                     icon: 'error',
                     title: 'دانشجوی عزیز متاسفانه سیستم با مشکل مواجه شده است.لطفا بعدا امتحان کنید',
                     showConfirmButton: false,
-                    timer: 5000
+                    timer: 3000
                     });
                 }
             });
@@ -175,6 +175,7 @@
                 dataType: "json",
                 success: function(data) {
                     $('.searchResultDiv').html('');
+                    console.log(data);
                     if(data.length > 0){
                         $('#search_input').css('color','green');
                         var searchResultDiv_html = '';
@@ -184,7 +185,7 @@
                                 searchResultDiv_html += '<div class="searchResultDiv_div"><p class="searchResultDiv_p">'+data[i].message+'</p><p class="searchResultDiv_p searchResultDiv_p_reply">'+data[i].reply_message+'</p></div>';
                             }
                             else{
-                                searchResultDiv_html += '<div class="searchResultDiv_div"><p class="searchResultDiv_p">'+data[i].message+'</p><p class="searchResultDiv_p searchResultDiv_p_reply">بدون پاسخ</p></div>' ;
+                                searchResultDiv_html += '<div class="searchResultDiv_div"><p class="searchResultDiv_p">'+data[i].message+'</p></div>' ;
                             }
                         }
                         $('.searchResultDiv').html(searchResultDiv_html);

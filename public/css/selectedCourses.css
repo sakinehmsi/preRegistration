@@ -8,23 +8,24 @@
 
 #top_div{
     width: 80%;
-    /* border: 4px solid #324f67; */
     margin-bottom: 16px;
-    height: 35%;
+    /* height: 35%; */
     direction: rtl;
     text-align: center !important;
     display: inline-block;
 }
 #weeklySchedule_table{
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     border-collapse: separate;
     margin: 0px !important;
     text-align: center !important;
-    cursor: default;
     color: #0a304e;
     border: 1px solid #324f67;
     font-size: smaller !important;
+    border-spacing: 1px;
+    background-color: #0a304e;
+    font-family: 'BMitra' !important;
 }
 #weeklySchedule_table th,td{
     width: fit-content;
@@ -34,23 +35,43 @@
     background-color: white;
 }
 #weeklySchedule_table td{
-    background-color: white;
+    background-color: rgb(255 255 255);
 }
 .input_readonly_css{
     color: #072339 !important;
     display: inline-block;
     text-align: center !important;
     background-color: initial ;
-    cursor: default !important;
-    font-family: 'BNarm' !important;
+    cursor: default ;
+    font-family: 'BMitra' !important;
     padding: 2px !important;
     border : 0px !important;
     width:  100% !important;
     height: 100% !important;
-    font-size: small;
-    font-weight: normal;
+    font-size: 1.2em;
+    font-weight: 600;
 } 
-
+title{
+    font-family: 'BMitra' !important; 
+}
+.same-class1 {
+    position: absolute;
+    width: 80px !important;
+    cursor: pointer;
+    background-color : #9fddfa !important;
+}
+.same-class2 {
+    position: absolute;
+    width: 114px !important;
+    cursor: pointer;
+    background-color : #9fddfa !important;
+}
+.same-class3 {
+    position: absolute;
+    width: 157px !important;
+    cursor: pointer;
+    background-color : #9fddfa !important;
+}
 #buttom_div{
     height: 60%;
     width: 80%;
@@ -82,7 +103,7 @@
     background-color: white;
     color: #324f67;
     text-align: center;
-    cursor: pointer;
+    cursor: default;
     padding-top: 1%;
 } 
 #head p{
@@ -103,6 +124,8 @@
     padding: 12px 0px; 
     cursor: pointer;
     color: #072339  !important;
+    font-size: 1.25em;
+    font-weight: 600;
 }  
 #all_courses_table tr {
     border-bottom: 1px solid #65b3be;
@@ -141,7 +164,6 @@
     background: #1b94a7;
 }
 .filter_tbl{
-    background: #1b94a7;
     width: 80% !important;
     height: 80% !important;
     position: relative;
@@ -156,8 +178,15 @@
 }
 .td_cursor{
     cursor: cell;
-    background-attachment: #1b94a7;
+    background-color: #eee !important;
 }
-.td_zero{
-    background-attachment: #eee;
+.td_one{
+    background-color: #71c500 !important;
+    cursor: pointer;   
+}
+.backgray{
+    background-color : #b3c5c5 !important;
+}
+.backgreen{
+     background-color : #5ed26a !important;
 }

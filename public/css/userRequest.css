@@ -53,11 +53,11 @@
 }
 #myInput {
   background-color: initial;
-  font-size: 16px;
+  font-size: 1.4em;
   color: #999;
   border: 0px;
   text-align: right;
-  font-family: 'BNarm','BioRhyme';
+  font-family: 'BMitra','BioRhyme';
   width: 84%;
   height: 100%;
   margin-right: 3px;
@@ -71,7 +71,7 @@
   color: #999;
   opacity: 1;
   padding-right: 10px;
-  font-family:'BNarm','BioRhyme';
+  font-family:'BMitra','BioRhyme';
 }
 #myInput:focus{
     outline: none;
@@ -168,18 +168,18 @@
   background-color: white;
   border-radius: 30px;
   margin: 5px 0px 0px;
-  font-size: initial;
-  padding-right: 1%;
-  font-family: 'BNarm','BioRhyme';
+  font-size: 1.4em;
+  padding-right: 3%;
+  font-family: 'BMitra','BioRhyme';
   color: #0a304e;
   height: 100%;
   width: 92%;
   border: 1px solid #0a304e;
 }
 #myRequest::placeholder{
-  font-size: initial;
+  font-size: 0.8em;
   padding-right: 1%;
-  font-family: 'BNarm';
+  font-family: 'BMitra';
   color: #808080;
 }
 .form_container{

@@ -23,9 +23,6 @@
         <div class="navbar" id="myNavbar">
           <ul class="page-menu" id="mymenu">
               <li class="menu-content"><a  href="{{route('home')}}">صفحه اصلی</a></li>
-              <li class="menu-content"><a  href="{{route('home')}}">چارت گروه</a></li>
-              <li class="menu-content"><a  href="{{route('home')}}">چارت عمومی</a></li>
-              <li class="menu-content"><a  href="{{route('home')}}">راهنمای سیستم </a></li>
               @yield('navbar')
           </ul>
           <div class="page-date" id="mydate">

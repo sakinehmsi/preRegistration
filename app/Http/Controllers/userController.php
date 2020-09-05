@@ -9,13 +9,18 @@ use App\weekly_schedule;
 use App\Passed_course;
 use App\Specialized_course;
 use App\Course;
+use App\Filter;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use DB;
 use validator;
 class userController extends Controller
 {
-	//user
+	//signin
+    public function showhome(){
+        return view('home')->with('showLoginForm', '0')->with('notfound','0')->with('incorrectPass', '0');;
+        return captcha_src();
+    }
     public function storeNewUser(Request $request){
         
         $messages =[
@@ -58,7 +63,13 @@ class userController extends Controller
             return ($validator->errors());
         }
     }
-    
+    public function showselect(){
+        if(session('userfirstName') != ''){
+           return view('select');
+        }else{
+           return redirect('');
+        }
+    }
     public function getUser(Request $request){
         $messages = [ 
             'stuNum.required' => 'لطفا شماره دانشجویی  خود را وارد نمایید', 
@@ -105,45 +116,47 @@ class userController extends Controller
         }
         return ($validator->errors());
     }
-    
     public function refreshCaptcha(){
         return response()->json(['captcha'=> captcha_img()]);
     }
     //preRegistration
+    public function showavailableCourses(){
+        if(session('userfirstName') != ''){
+           $courses = DB::table('Lessons')->groupBy('main_id')->get();
+           return view('availableCourses')->with('courses', $courses);
+        }else{
+           return redirect('');
+        }
+    }
     public function checkPreRegistration(){
+        $filteredCoursesID[] = array();
+        $usercourses[] = array();
+        $coursesError[] = array();
         $user = Weekly_schedule::where(['id' => Session::get('userid')])->first();
-        
         if($user != null){
-            //show weekly Schedule
-            $coursesID[] = array();
-            $coursesName[] = array();
-            //initialaization coursesID and coursesName
-            for($i = 29 ;  $i > -1; $i--){
-                $courseID='coursesID' . $i;
-                $courseName='coursesName' . $i;
-                array_unshift($coursesID, $user->$courseID);
-                array_unshift($coursesName , $user->$courseName);
+            for($u = 0; $u < 24; $u++) {
+                $v = 'coursesID'.$u.'';
+                if( $user[$v] != ""){
+                    $user[$v] = explode(',', $user[$v]);
+                    array_unshift($filteredCoursesID, $user[$v][0]);
+                    $usercourse[] = array();
+                    array_unshift($usercourse, $user[$v][0], $user[$v][1], $user[$v][2], $user[$v][3], $user[$v][4], $user[$v][5], $user[$v][6], $user[$v][7]);
+                    array_unshift($usercourses, $usercourse);
+                    unset($usercourse);
+                }
             }
-            //check weekly Schedule
-            $id =  Session::get('userid');
+            $filteredCoursesID = array_filter($filteredCoursesID);//user courses id 
+            $usercourses = array_filter($usercourses);//user courses 
             
-            $selectedCoursesID[] = array();
-            $coursesError[] = array();
-            
-            $tempFilterCoursesID = array_filter($coursesID);
-            $filteredCoursesID = array_unique($tempFilterCoursesID);
-            
+            //coursesError
             foreach ($filteredCoursesID as $filteredCourseID) {
                 $filteredCourseID = substr($filteredCourseID, 0, -3);
                 $tempCheckCourse = Specialized_course::where(['id' => $filteredCourseID])->first();
                 if($tempCheckCourse != null){
-                    
                     $preRequisiteID1 = $tempCheckCourse->preRequisiteID1 ;
                     $preRequisiteID2 = $tempCheckCourse->preRequisiteID2 ;
-                    
                     $passed_PreRequisiteID1 = Passed_course::where(['stuNum' => Session::get('userid') , 'courseID' => $preRequisiteID1 ])->first();
                     $passed_PreRequisiteID2 = Passed_course::where(['stuNum' => Session::get('userid') , 'courseID' => $preRequisiteID2 ])->first();
-                    //initialization coursesError  
                     if( $preRequisiteID2 != null){
                         // has preRequisiteID2
                         if($passed_PreRequisiteID1 != null && $passed_PreRequisiteID2 != null){
@@ -185,15 +198,9 @@ class userController extends Controller
                     }
                 }
             }
-            // end check weekly Schedule
-            
             //show weekly Schedule result
             if(session('userfirstName') != ''){
-                return view('finalSelectedCourses')->with('coursesID', $coursesID)
-                                                   ->with('coursesName', $coursesName)
-                                                   ->with('coursesError', $coursesError)
-                                                   ->with('successPreRegistraion', 0)
-                                                   ->with('correntPreRegistraion', 1);
+                return view('finalSelectedCourses')->with('usercourses', $usercourses)->with('coursesError', $coursesError);            
             }else{
                 return redirect('');
             }
@@ -207,79 +214,121 @@ class userController extends Controller
             }
         }
     }
-    
     public function sendselectedCourses(Request $request){
+        $filteredCoursesID[] = array();
+        $usercourses[] = array();
         $id =  Session::get('userid');
-        $lessons[] = array();
+        $lessons[] = array();        
         $main_ids[] = array();
+        $overbid_lessonsID[] = array();
         $overbid_lessons[] = array();
-        $selectedCourses = explode(',', request()->selectedCourses);
-        
-        foreach($selectedCourses as $selectedCourse){
-            array_unshift($lessons, Lesson::where('lesson_name' , $selectedCourse)->get());            
+        $selectedCoursesID = explode(',', request()->selectedCoursesID);
+        foreach($selectedCoursesID as $selectedCourseID){
+            array_unshift($lessons, Lesson::where('main_id' , $selectedCourseID)->get());
         }
+        $user = Weekly_schedule::where(['id' => Session::get('userid')])->first();
         
-        //overbid_lessons
+        if($user != null){
+            for($u = 0; $u < 24; $u++) {
+                $v = 'coursesID'.$u.'';
+                if( $user[$v] != ""){
+                    $user[$v] = explode(',', $user[$v]);
+                    array_unshift($filteredCoursesID, $user[$v][0]);
+                    $usercourse[] = array();
+                    array_unshift($usercourse, $user[$v][0], $user[$v][1], $user[$v][2], $user[$v][3], $user[$v][4], $user[$v][5], $user[$v][6], $user[$v][7], $user[$v][8], $user[$v][9], $user[$v][10]);
+                    array_unshift($usercourses, $usercourse);
+                    unset($usercourse);
+                }
+            } 
+            $filteredCoursesID = array_filter($filteredCoursesID);
+            foreach($filteredCoursesID as $filteredCourseID){
+                $filteredCourseID = substr($filteredCourseID, 0, -3);
+                array_unshift($lessons, Lesson::where('main_id' , $filteredCourseID)->get());
+            } 
+            $lessons = array_filter($lessons);
+            $lessons  = array_unique( $lessons );
+        }
+        $usercourses = array_filter($usercourses);
+        //overbid_lessons 
         $available_lessons = Lesson::all();
         foreach($available_lessons as $available_lesson){
             array_unshift( $main_ids  , $available_lesson->main_id);
         }
         $main_ids  = array_filter( $main_ids );
-        $main_ids  = array_unique( $main_ids );
-        
+        $main_ids  = array_unique( $main_ids );        
         foreach($main_ids as $main_id){           
             $available_lesson_status = Passed_course::where(['stuNum' => Session::get('userid') , 'courseID' => $main_id ])->first();
             if($available_lesson_status == null){
                 $Specialized_lesson = Specialized_course::where(['id' => $main_id])->first();
                 if($Specialized_lesson != null){
-                    $preReauisiteID1 = $Specialized_lesson->preReauisiteID1;
-                    $preReauisiteID1_status = Passed_course::where(['stuNum' => Session::get('userid') , 'courseID' => $preReauisiteID1 ])->first();
-                    if($preReauisiteID1_status != null){
-                        if($Specialized_lesson->preReauisiteID2 != null){
-                            $preReauisiteID2 = $Specialized_lesson->preReauisiteID2;
-                        }
-                        $preReauisiteID2_status = Passed_course::where(['stuNum' => Session::get('userid') , 'courseID' => $preReauisiteID2 ])->first();
-                        if($preReauisiteID2_status != null){
-                            array_unshift($overbid_lessons, Lesson::where('main_id' , $main_id)->get());
-                            
+                    $preRequisiteID1 = $Specialized_lesson->preRequisiteID1;
+                    $preRequisiteID1_status = Passed_course::where(['stuNum' => Session::get('userid') , 'courseID' => $preRequisiteID1 ])->first();
+                    if($preRequisiteID1_status != null){
+                        if($Specialized_lesson->preRequisiteID2 != null){
+                            $preRequisiteID2 = $Specialized_lesson->preRequisiteID2;
+                            $preRequisiteID2_status = Passed_course::where(['stuNum' => Session::get('userid') , 'courseID' => $preRequisiteID2 ])->first();
+                            if($preRequisiteID2_status != null){
+                                array_unshift($overbid_lessonsID, $main_id);                            
+                            }
+                        }else{
+                            array_unshift($overbid_lessonsID, $main_id);
                         }
                     }
                 }else{
-                    array_unshift($overbid_lessons, Lesson::where('main_id' , $main_id)->get());
+                    array_unshift($overbid_lessonsID, $main_id);
                 }
             }
         }
-        
-        if(session('userfirstName') != ''){
-            return view('selectedCourses')->with('courses', $lessons)->with('overbid_lessons', $overbid_lessons);
+        $overbid_lessonsID =  array_filter( $overbid_lessonsID);
+        $filteredCoursesID =  array_filter( $filteredCoursesID);
+        $overbid_lessonsID = array_diff( $overbid_lessonsID ,  $selectedCoursesID );
+        $overbid_lessonsID = array_diff( $overbid_lessonsID ,  $filteredCoursesID );
+        $overbid_lessonsID = implode(',' , $overbid_lessonsID);
+        $overbid_lessonsID = explode(',' ,$overbid_lessonsID);
+        for($ob = 0 ;  $ob < count($overbid_lessonsID) ;  $ob++){
+            $id = (int) $overbid_lessonsID[$ob];
+            array_unshift($overbid_lessons, Lesson::where(['main_id' => $id])->get());
+        }
+        $overbid_lessons = array_filter($overbid_lessons);
+        if($user != null){
+            if(session('userfirstName') != ''){
+                return view('selectedCourses')->with('usercourses', $usercourses)->with('courses', $lessons)->with('overbid_lessons', $overbid_lessons);
+            }else{
+                return redirect('');
+            }
         }else{
-            return redirect('');
+            $usercourses = array_filter($usercourses);//user courses 
+            if(session('userfirstName') != ''){
+                return view('selectedCourses')->with('usercourses', $usercourses)->with('courses', $lessons)->with('overbid_lessons', $overbid_lessons);
+            }else{
+                return redirect('');
+            }   
         }
     }
-    
     public function showfinalSelectedCourses(Request $request){
-        $coursesID = explode(',', request()->coursesID);
-        $coursesName = explode(',', request()->coursesName);
-        $id =  Session::get('userid');
-        $selectedCoursesID[] = array();
+        $filteredCoursesID[] = array();
         $coursesError[] = array();
-        
-        //filter empty elements of array
-        $tempFilterCoursesID = array_filter($coursesID);
-        //unique element
-        $filteredCoursesID = array_unique($tempFilterCoursesID);
-        
+        $temps[] = array();
+        for($t = 0; $t < 24; $t++){
+            $temps[$t] = "";
+        }
+        $id =  Session::get('userid');
+        //get user courses id 
+        $usercourses = json_decode(request()->usercourses, true); 
+        for($u = 0; $u < count($usercourses); $u++) {
+            array_unshift($filteredCoursesID, $usercourses[$u][0]);
+            $temps[$u] = ''.$usercourses[$u][0].','.$usercourses[$u][1].','.$usercourses[$u][2].','.$usercourses[$u][3].','.$usercourses[$u][4].','.$usercourses[$u][5].','.$usercourses[$u][6].','.$usercourses[$u][7].','.$usercourses[$u][8].','.$usercourses[$u][9].','.$usercourses[$u][10].'';
+        }
+        $filteredCoursesID = array_filter($filteredCoursesID);//user courses id 
+        //coursesError
         foreach ($filteredCoursesID as $filteredCourseID) {
             $filteredCourseID = substr($filteredCourseID, 0, -3);
             $tempCheckCourse = Specialized_course::where(['id' => $filteredCourseID])->first();
             if($tempCheckCourse != null){
-                
                 $preRequisiteID1 = $tempCheckCourse->preRequisiteID1 ;
                 $preRequisiteID2 = $tempCheckCourse->preRequisiteID2 ;
-                
                 $passed_PreRequisiteID1 = Passed_course::where(['stuNum' => Session::get('userid') , 'courseID' => $preRequisiteID1 ])->first();
                 $passed_PreRequisiteID2 = Passed_course::where(['stuNum' => Session::get('userid') , 'courseID' => $preRequisiteID2 ])->first();
-                    
                 if( $preRequisiteID2 != null){
                     // has preRequisiteID2
                     if($passed_PreRequisiteID1 != null && $passed_PreRequisiteID2 != null){
@@ -321,152 +370,108 @@ class userController extends Controller
                 }
             }
         }
-        
         $weekly_schedule = weekly_schedule::where(['id' => Session::get('userid')])->first();
         if($weekly_schedule == null){
             weekly_schedule::create(
                 [
-                //user id
                 'id'=>$id,
-                //courses id
-                'coursesID0' =>$coursesID[0],
-                'coursesID1'=>$coursesID[1],
-                'coursesID2' => $coursesID[2],
-                'coursesID3' => $coursesID[3],
-                'coursesID4' => $coursesID[4],
-                'coursesID5' => $coursesID[5],
-                'coursesID6' => $coursesID[6],
-                'coursesID7' => $coursesID[7],
-                'coursesID8' => $coursesID[8],
-                'coursesID9' => $coursesID[9],
-                'coursesID10' => $coursesID[10],
-                'coursesID11' => $coursesID[11],
-                'coursesID12' => $coursesID[12],
-                'coursesID13' => $coursesID[13],
-                'coursesID14' => $coursesID[14],
-                'coursesID15' => $coursesID[15],
-                'coursesID16' => $coursesID[16],
-                'coursesID17' => $coursesID[17],
-                'coursesID18' => $coursesID[18],
-                'coursesID19' => $coursesID[19],
-                'coursesID20' => $coursesID[20],
-                'coursesID21' => $coursesID[21],
-                'coursesID22' => $coursesID[22],
-                'coursesID23' => $coursesID[23],
-                'coursesID24' => $coursesID[24],
-                'coursesID25' => $coursesID[25],
-                'coursesID26' => $coursesID[26],
-                'coursesID27' => $coursesID[27],
-                'coursesID28' => $coursesID[28],
-                'coursesID29' => $coursesID[29],
-                //courses Name
-                'coursesName0' => $coursesName[0],
-                'coursesName1' => $coursesName[1],
-                'coursesName2' => $coursesName[2],
-                'coursesName3' => $coursesName[3],
-                'coursesName4' => $coursesName[4],
-                'coursesName5' => $coursesName[5],
-                'coursesName6' => $coursesName[6],
-                'coursesName7' => $coursesName[7],
-                'coursesName8' => $coursesName[8],
-                'coursesName9' => $coursesName[9],
-                'coursesName10' => $coursesName[10],
-                'coursesName11' => $coursesName[11],
-                'coursesName12' => $coursesName[12],
-                'coursesName13' => $coursesName[13],
-                'coursesName14' => $coursesName[14],
-                'coursesName15' => $coursesName[15],
-                'coursesName16' => $coursesName[16],
-                'coursesName17' => $coursesName[17],
-                'coursesName18' => $coursesName[18],
-                'coursesName19' => $coursesName[19],
-                'coursesName20' => $coursesName[20],
-                'coursesName21' => $coursesName[21],
-                'coursesName22' => $coursesName[22],
-                'coursesName23' => $coursesName[23],
-                'coursesName24' => $coursesName[24],
-                'coursesName25' => $coursesName[25],
-                'coursesName26' => $coursesName[26],
-                'coursesName27' => $coursesName[27],
-                'coursesName28' => $coursesName[28],
-                'coursesName29' => $coursesName[29],
+                'coursesID0' =>$temps[0],
+                'coursesID1'=>$temps[1],
+                'coursesID2' =>$temps[2],
+                'coursesID3'=>$temps[3],
+                'coursesID4' =>$temps[4],
+                'coursesID5'=>$temps[5],
+                'coursesID6'=>$temps[6],
+                'coursesID7' =>$temps[7],
+                'coursesID8'=>$temps[8],
+                'coursesID9' =>$temps[9],
+                'coursesID10'=>$temps[10],
+                'coursesID11'=>$temps[11],
+                'coursesID12' =>$temps[12],
+                'coursesID13'=>$temps[13],
+                'coursesID14' =>$temps[14],
+                'coursesID15'=>$temps[15],
+                'coursesID16'=>$temps[16],
+                'coursesID17' =>$temps[17],
+                'coursesID18'=>$temps[18],
+                'coursesID19' =>$temps[19],
+                'coursesID20'=>$temps[20],
+                'coursesID21'=>$temps[21],
+                'coursesID22' =>$temps[22],
+                'coursesID23'=>$temps[23],
                 ]
             );
         }   
         else{
-            weekly_schedule::where('id', $id)
-                ->update(['coursesID0' => $coursesID[0],
-                'coursesID1'=>$coursesID[1],
-                'coursesID2' => $coursesID[2],
-                'coursesID3' => $coursesID[3],
-                'coursesID4' => $coursesID[4],
-                'coursesID5' => $coursesID[5],
-                'coursesID6' => $coursesID[6],
-                'coursesID7' => $coursesID[7],
-                'coursesID8' => $coursesID[8],
-                'coursesID9' => $coursesID[9],
-                'coursesID10' => $coursesID[10],
-                'coursesID11' => $coursesID[11],
-                'coursesID12' => $coursesID[12],
-                'coursesID13' => $coursesID[13],
-                'coursesID14' => $coursesID[14],
-                'coursesID15' => $coursesID[15],
-                'coursesID16' => $coursesID[16],
-                'coursesID17' => $coursesID[17],
-                'coursesID18' => $coursesID[18],
-                'coursesID19' => $coursesID[19],
-                'coursesID20' => $coursesID[20],
-                'coursesID21' => $coursesID[21],
-                'coursesID22' => $coursesID[22],
-                'coursesID23' => $coursesID[23],
-                'coursesID24' => $coursesID[24],
-                'coursesID25' => $coursesID[25],
-                'coursesID26' => $coursesID[26],
-                'coursesID27' => $coursesID[27],
-                'coursesID28' => $coursesID[28],
-                'coursesID29' => $coursesID[29],
-                //courses Name
-                'coursesName0' => $coursesName[0],
-                'coursesName1' => $coursesName[1],
-                'coursesName2' => $coursesName[2],
-                'coursesName3' => $coursesName[3],
-                'coursesName4' => $coursesName[4],
-                'coursesName5' => $coursesName[5],
-                'coursesName6' => $coursesName[6],
-                'coursesName7' => $coursesName[7],
-                'coursesName8' => $coursesName[8],
-                'coursesName9' => $coursesName[9],
-                'coursesName10' => $coursesName[10],
-                'coursesName11' => $coursesName[11],
-                'coursesName12' => $coursesName[12],
-                'coursesName13' => $coursesName[13],
-                'coursesName14' => $coursesName[14],
-                'coursesName15' => $coursesName[15],
-                'coursesName16' => $coursesName[16],
-                'coursesName17' => $coursesName[17],
-                'coursesName18' => $coursesName[18],
-                'coursesName19' => $coursesName[19],
-                'coursesName20' => $coursesName[20],
-                'coursesName21' => $coursesName[21],
-                'coursesName22' => $coursesName[22],
-                'coursesName23' => $coursesName[23],
-                'coursesName24' => $coursesName[24],
-                'coursesName25' => $coursesName[25],
-                'coursesName26' => $coursesName[26],
-                'coursesName27' => $coursesName[27],
-                'coursesName28' => $coursesName[28],
-                'coursesName29' => $coursesName[29],
+            weekly_schedule::where('id', $id)->update([
+                'id'=>$id,
+                'coursesID0' =>$temps[0],
+                'coursesID1'=>$temps[1],
+                'coursesID2' =>$temps[2],
+                'coursesID3'=>$temps[3],
+                'coursesID4' =>$temps[4],
+                'coursesID5'=>$temps[5],
+                'coursesID6'=>$temps[6],
+                'coursesID7' =>$temps[7],
+                'coursesID8'=>$temps[8],
+                'coursesID9' =>$temps[9],
+                'coursesID10'=>$temps[10],
+                'coursesID11'=>$temps[11],
+                'coursesID12' =>$temps[12],
+                'coursesID13'=>$temps[13],
+                'coursesID14' =>$temps[14],
+                'coursesID15'=>$temps[15],
+                'coursesID16'=>$temps[16],
+                'coursesID17' =>$temps[17],
+                'coursesID18'=>$temps[18],
+                'coursesID19' =>$temps[19],
+                'coursesID20'=>$temps[20],
+                'coursesID21'=>$temps[21],
+                'coursesID22' =>$temps[22],
+                'coursesID23'=>$temps[23],
             ]);
         }
         if(session('userfirstName') != ''){
-            return view('finalSelectedCourses')->with('coursesID', $coursesID)
-                                               ->with('coursesName', $coursesName)
-                                               ->with('coursesError', $coursesError)
-                                               ->with('successPreRegistraion', 1)
-                                               ->with('correntPreRegistraion', 1);
+            return view('finalSelectedCourses')->with('usercourses', $usercourses)->with('coursesError', $coursesError);            
         }else{
             return redirect('');
         }
+    }
+    //passed courses
+    public function showchart(){
+        if(session('userfirstName') != ''){
+            return view('chart');
+        }else{
+            return redirect('');
+        }
+    }
+    public function showPassedCourses(){
+        $passed_coursesId[] = array() ;
+        $passed_courses = Passed_course::where(['stuNum' =>session::get('userid') ])->get();
+        foreach($passed_courses as $passed_course){
+            array_unshift($passed_coursesId , $passed_course->courseID );
+        }
+        $passed_coursesId = array_filter($passed_coursesId);
+        return $passed_coursesId;
+    }
+    public function lesson_chart(){        
+        $passed_coursesId[] = array() ;
+        $passed_courses = Passed_course::where(['stuNum' =>  $_POST['stuNum'] ])->get();
+        foreach($passed_courses as $passed_course){
+            array_unshift($passed_coursesId , $passed_course->courseID );
+        }
+        $passed_coursesId = array_filter($passed_coursesId);
+        $coursesID = explode(',', $_POST['coursesID']);
+        // dd($coursesID);
+        // dd($passed_coursesId);
+        $newPassedCoursesID = array_diff( $coursesID , $passed_coursesId);
+        
+        foreach($newPassedCoursesID as $courses){
+            Passed_course::create([
+              'courseID' => $courses,
+              'stuNum' => $_POST['stuNum'],
+            ]);
+        } 
     }
     //chatRoom
     public function showUsersRequestsPage(){
@@ -479,7 +484,6 @@ class userController extends Controller
           return redirect('');
        }  
     } 
-    
     public function send_request(){
         DB::connection('mongodb')->collection('preRegistration_chatRoom')->insert(
             ['sender'=> $_POST['sender'],
@@ -488,7 +492,6 @@ class userController extends Controller
             ]
         );
     }
-    
     public function refresh_ChatRoom(){
         $refreshed_data =  DB::connection('mongodb')->collection('preRegistration_chatRoom')->orderBy('_id', 'DESC')->take(20)->get();
        
@@ -498,7 +501,6 @@ class userController extends Controller
             return redirect('');
         }  
     } 
-    
     public function refresh_user_messages(){
         $id =  Session::get('userid');
         $request_content =  DB::connection('mongodb')->collection('preRegistration_chatRoom')->where('sender' , ''.$id.'')->orderBy('_id', 'DESC')->take(20)->get();
@@ -509,25 +511,42 @@ class userController extends Controller
             return redirect('');
         } 
     }
-    
     public function search_input(){
         $search_input = $_POST['search_input'];
-        $all_documents = DB::connection('mongodb')->collection('preRegistration_chatRoom')->where('message' , 'like', '%'.$search_input.'%')->get();
+        $array_search_input = explode(' ',$search_input );
+        $all_documents[] = array();
+        $final_document[] = array();
+        for($s = 0 ;  $s < count($array_search_input) ;  $s++){
+            $doc[] = array();
+            array_unshift($doc , DB::connection('mongodb')->collection('preRegistration_chatRoom')->where('message' , 'like', '%'.$array_search_input[$s].'%')->get());
+            $doc = array_filter($doc);
+            array_unshift($doc , DB::connection('mongodb')->collection('preRegistration_chatRoom')->where('reply_message' , 'like', '%'.$array_search_input[$s].'%')->get());
+            $doc = array_filter($doc);             
+            $doc = array_unique($doc);
+            for($e = 0 ; $e < count($doc) ;  $e++ ){
+                for($d = 0 ; $d < count($doc[$e]) ;  $d++ ){
+                    array_unshift($all_documents ,  $doc[$e][$d]); 
+                    $all_documents = array_filter($all_documents);    
+                }  
+            }
+            unset($doc); 
+        }
+        $all_documents = array_filter($all_documents);
+        $all_documents = array_unique($all_documents, SORT_REGULAR);
+        foreach ($all_documents as $key => $value) {
+            array_unshift($final_document ,  $value);
+        }
+        $final_document = array_filter($final_document);
+        $final_document = array_unique($final_document, SORT_REGULAR);
         if(session('userfirstName') != ''){
-            return $all_documents ;
+            return $final_document ;
         }else{
             return redirect('');
         }  
     }
-    //passed courses
-    public function lesson_chart(Request $request){
-        $coursesID = explode(',', request()->coursesID);
-        foreach($coursesID as $courses){
-            Passed_course::create([
-              'courseID' =>$courses,
-              'stuNum' => session::get('userid'),
-            ]);
-        } 
-    } 
-    
+    //logout
+    public function logout(Request $request){
+        $request->session()->flush();
+        return redirect('');
+    }
 }

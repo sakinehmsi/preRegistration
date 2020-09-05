@@ -1,8 +1,8 @@
 @font-face {
-    font-family: 'BNarm';
-    src: url('BNarm.eot?#') format('eot'),
-    url('BNarm.ttf') format('truetype'),
-    url('BNarm.woff') format('woff');
+    font-family: 'BMitra';
+    src: url('BMitra.eot?#') format('eot'),
+    url('BMitra.ttf') format('truetype'),
+    url('BMitra.woff') format('woff');
 }
 @font-face {
   font-family: 'BioRhyme';
@@ -12,14 +12,59 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 body {
-    font-family: 'BNarm' !important;
+    font-family: 'BMitra' !important;
     font-weight: 100;
     text-align: center;
-    overflow-y: auto;
+    overflow-y: hidden;
     direction: rtl !important;
     cursor: default;
-    background-image: url('../images/green.jpg');
+     background: linear-gradient(to right, #111b01, #6faf0b);
     background-size: cover;
+}
+.swal2-popup{
+    font-size: 1em !important;
+}
+.btn-danger{
+    color: white !important;
+    border: 0px !important;  
+    outline: 0px !important;
+    font-size: 1em !important; 
+    margin-left: 4px !important;
+}
+.btn-success{
+    color: white !important;
+    background-color: #398439 !important;
+    border: 0px !important;  
+    outline: 0px !important;
+    font-size: 1em !important;
+}
+
+.field-wrap label{
+    width: 100%;
+    color: green;
+}
+.field-captcha label{
+    width: 100%;
+    color: green;
+}
+.field-wrap input{
+    border: 1px solid green;
+    border-radius: 5px;
+    font-family: 'BioRhyme';
+    padding: 4px;
+    font-size: 1em !important;
+}
+.field-captcha input{
+    border: 1px solid green;
+    border-radius: 5px;
+    font-family: 'BioRhyme';
+    padding: 4px;
+    font-size: 1em !important;
+}
+.captcha-img-div img{
+    width: 23%;
+    border-radius: 11px;
+    border: 2px solid #008000;
 }
 #login{
     margin: 11% 25%;
@@ -27,13 +72,22 @@ body {
     width: 50%;
     display: block;
     text-align: right;
-    height: 47%;
-    background-color: white;
+    height: 51%;
+    background-color: #c2d89e;
+    border-radius: 23px;
 }
 .submitSignInuser{
-    padding: 1px 24px;
-    margin: 40px;
+    padding: 1px 24px 4px;
+    /* margin-top: 40px; */
+    float: left;
+    font-weight: 600;
+    color: #334e07;
+    border-radius: 13px;
     cursor: pointer;
+    border: 2px solid green;
+}
+.submitSignInuser:hover{
+    background-color: #bcd691;
 }
 .submit-text-css{
     width: fit-content;
@@ -41,16 +95,21 @@ body {
     margin: 0px;
 }
 .captcha{
-    margin-top: 26px;
+    margin-top: 26px;    
 }
 input{
     cursor: text;
-    font-family: 'BNarm' , 'BioRhyme';
+    font-family: 'BMitra' , 'BioRhyme';
     margin-bottom: 33px;
     width: 40%;
 }
 .btn_refresh{
     cursor: pointer;
+    cursor: pointer;
+    border: 0px;
+    margin-right: 2px;
+    background-color: inherit;
+    color: green;
 }
 .requestsPage{
     padding: 1px 24px;
@@ -74,18 +133,19 @@ input{
 }
 #myRequest{
     background-color: initial;
-    font-size: initial;
-    padding-right: 1%;
-    font-family: 'BNarm','BioRhyme';
-    color: #075f06;
+    font-size: 1.3em;
+    font-weight: 600;
+    padding-right: 3.2%;
+    font-family: 'BMitra','BioRhyme';
+    color: #334e07 !important;
     height: 100%;
     width: 92%;
     border: 0px;
 }
 #myRequest::placeholder{
-    font-size: initial;
+    font-size: 1em;
     padding-right: 1%;
-    font-family: 'BNarm';
+    font-family: 'BMitra';
     color: #808080;
 }
 .form_container{
@@ -94,7 +154,7 @@ input{
 }
 .send_icon_css{
     font-size: x-large;
-    color: #075f06;
+    color: #294104;
     background-color: initial;
     -webkit-transform:scale(1);
     -ms-transform:scale(1);
@@ -118,12 +178,13 @@ input{
     width: 50%;
     height: 100%;
     float: right;
-    background: #eeeeee73;;
+    background-color: #7fb32df7;
     /* border: 1px solid #075f06; */
 }
 #refresh_chatRoom{
     float: left;
     margin-left: 5%;
+    background-color: initial;
 }
 .user_request_top{
     color: #075f06;
@@ -143,6 +204,8 @@ input{
     width: fit-content;
     float: right;
     padding-right: 2%;
+    font-size: 1.1em;
+    font-weight: 600;
 }
 .user_request_content{
     height: 81%;
@@ -158,7 +221,7 @@ input{
     box-shadow: inset 0 0 6px #f1f1f1;
 }
 .user_request_content::-webkit-scrollbar-thumb {
-    background-color: #049e03;
+    background-color: #4b6b18;
     border-radius: 6px;
 }
 .request_content_container{
@@ -177,6 +240,7 @@ input{
     margin : 0px;
     width: 93%;
     float: left;
+    font-size: 1.1em;
 }
 .request_content_darker{
     border-color: #ccc;
@@ -195,7 +259,7 @@ input{
     height: 10%;
     width: 100% !important;
     overflow: hidden;
-    color: #b3a4a4;
+    color: #07bde6;
 }
 .reply{
     color: #eee;
@@ -207,6 +271,7 @@ input{
     transform:scale(1);
     -webkit-transition:.5s;
     transition:.5s;
+    font-size: 0.8em;
 }
 .reply:hover{
     -webkit-transform:scale(1.2);
@@ -227,7 +292,8 @@ input{
 .searchInputDiv p{
     margin: 0px 0px;
     padding: 12px 20px;
-    font-size: x-large;
+    font-size: 1.7em;
+    font-weight: 900;
 }
 .menu_content_div{
     margin-top: 15%;
@@ -238,11 +304,25 @@ input{
     color: #0f4805;
     display: flex;
     direction: rtl;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+.a_action:hover{
+    text-decoration: none;
+    color: #0f4805;
+    font-weight: 600;
 }
 .reply_active{
     background-color: #328e9a;
 }
 /* addLesson Page */
+.marginBottom0 {
+    margin-bottom: 0px !important;
+    padding-bottom: 7px !important;
+}
+.marginBottom17 {
+    margin-bottom: 17px !important;
+}
 .heigthDiv{
     height: 91%;
 }
@@ -255,13 +335,26 @@ input{
     width: 100%;
 }
 #lesson_id{
-    width: 100%;
+    width: 69%;
+    display: inline;
+    float: right;
+}
+#idFormat{
+    width: 83.1px;
+    display: inline;
     float: right;
 }
 #lesson_id_Input{
     width: 20%;
 }
+.idLable{
+    float: right;
+    display: block;
+    width: 82%;
+}
 #getLesson{
+    display: inline-block;
+    float: right;
     color: #eefa5a;
     padding: 2px 6px;
     background-color: #093311;
@@ -287,9 +380,40 @@ input{
 .background_css{
     background-color: #fff !important;
 }
+.width100{
+    width: 100%;
+}
+#class_time_start{
+    width: 47%;
+    float: right;
+}
+#class_time_end{
+    width: 47%; 
+    float: left;
+}
+#class_time_two_start{
+    width: 47%; 
+    float: right;
+}
+#class_time_two_end{
+    width: 47%; 
+    float: left;
+}
+#time_start{
+    width: 47%; 
+    float: right;
+}
+#time_end{
+    width: 47%; 
+    float: left;
+}
 .form-control{
-    color : #093311;
+    color : green !important;
     cursor: pointer;
+    font-size: 1em !important;
+    font-weight: 600 !important;
+    padding: 0px;
+    padding: 2px 12px !important;
 }
 [data-name="Md-DateTimePicker-Title"] {
     direction: rtl;
@@ -342,4 +466,262 @@ input{
     -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
     box-shadow: 0 5px 10px rgba(0,0,0,.2);
     line-break: auto;
+}
+/* user pre registration detail page */
+.selected{
+    background-color: white;
+}
+.inactive_users_div{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: #f7ffea;
+}
+.inactive_users_div::-webkit-scrollbar {
+    width: 4px;
+    padding-left: 1%;
+}
+.inactive_users_div::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px #f1f1f1;
+}
+.inactive_users_div::-webkit-scrollbar-thumb {
+    background-color: #4b6b18;
+    border-radius: 6px;
+}
+.inactive_users_div p{
+    font-size: 1.2em;
+    color: #374c19;
+    font-weight: 600;
+    background-color: white;
+    margin: 2px;
+}
+.inactive_users_tbl{
+    width: 100%;
+    background-color: inherit;
+}
+.inactive_users_tbl tr{
+    background-color: #f7ffea;
+    font-size: 1.2em;
+}
+.inactive_users_tbl td{
+    padding: 1px 11px 2px;
+    border-bottom: 1px solid green;
+}
+.leftDiv{
+    float: left;
+    width: 33%;
+}
+.user_idBox{
+    background-color: white !important;
+    width: 100%;
+    float: right;
+    padding: 9px 15px;
+}
+.user_idBox p{
+    width: fit-content;
+    float: right;
+    margin: 0px;
+    color: green;
+}
+.check_course_css{
+    float: right;
+    margin-right: 2%;
+    margin-top: 0.5%;
+    color: green;
+    -webkit-transform:scale(1);
+    -ms-transform:scale(1);
+    transform:scale(1);
+    -webkit-transition:.5s;
+    transition:.5s;
+    cursor: pointer;
+}
+.check_course_css:hover{
+    -webkit-transform:scale(1.2);
+    ransform:scale(1.2);
+}
+#user_id{
+    float: right;
+    width: 21%;
+    margin-right: 13px;
+    border-radius: 5px;
+    border: 2px solid green;
+}
+input{
+    color: green !important;
+    font-size: 1.2em !important;
+}
+#userName{
+    color: green;
+}
+.allLessontable{
+    width: 100%;
+}
+.allLessontable tr{
+    padding: 0px;
+    cursor: pointer;
+    border-bottom: 4px solid #7db02c78;
+    font-size: 1.3em;
+    border-radius: 18px;
+    text-align: center;
+}
+.allLessontable tr:hover{
+    background-color: white;
+}
+.allLessondiv{
+    float: right;
+    width: 50%;
+    height: 100%;
+    overflow-y: auto;
+    margin-left: 1%;
+    margin-right: 1%;
+    background-color: #c7d9aa;
+    border-radius: 13px;
+}
+.allLessondiv::-webkit-scrollbar {
+    width: 4px;
+    padding-left: 1%;
+}
+.allLessondiv::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px #f1f1f1;
+}
+.allLessondiv::-webkit-scrollbar-thumb {
+    background-color: #4b6b18;
+    border-radius: 6px;
+}
+.users_id_tbl{
+    color: #3d5400;
+    width: 46%;
+    max-height: 100%;
+    height: 5px !important;
+    overflow-y: auto;
+    float: right;
+}
+.users_id_tbl tr{
+    background-color: #7db02c;
+    text-align: center;
+    border-bottom: 1px solid green;
+    padding: 0px;
+    cursor: pointer;
+    font-size: 1.3em;
+    cursor: default;
+}
+.users_id_tbl::-webkit-scrollbar {
+    width: 4px;
+    padding-left: 1%;
+}
+.users_id_tbl::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px #f1f1f1;
+}
+.users_id_tbl::-webkit-scrollbar-thumb {
+    background-color: #4b6b18;
+    border-radius: 6px;
+}
+/* editLesson */
+.edit_div_head{
+    position: relative;
+    top: 0px;
+    display: inline-flex;
+    direction: rtl;
+    width: 100%;
+    height: 8%;
+    color: #324f67;
+    text-align: center;
+    cursor: default;
+    font-weight: 600;
+    box-shadow: 0px 6px 9px 0px #8080005e;
+    border-bottom: 1px solid #80800085;
+    color: #075f06;
+} 
+.edit_div_head p{
+    margin: 0px !important;
+    color: #075f06;
+    padding-top: 1%;
+    background-color: #eeeeeea6 !important;
+    font-weight: 900;
+}
+.edit_div{
+    width: 83%;
+    float: right;
+}
+.coursestableforEdit{
+    width: 100%;
+    margin: 0px;
+    background-color: #7fb32df7;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #121d01;
+    overflow-y: auto;
+    height: 92%;
+    display: inline-grid;
+}
+.coursestableforEdit::-webkit-scrollbar {
+    width: 4px;
+    padding-left: 1%;
+}
+.coursestableforEdit::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px #f1f1f1;
+}
+.coursestableforEdit::-webkit-scrollbar-thumb {
+    background-color: #4b6b18;
+    border-radius: 6px;
+}
+.coursestableforEdit td{
+    padding-bottom: 5px !important;
+    padding-top: 5px !important;
+    border-bottom: 1px solid white;
+}
+.editbtn{
+    margin-bottom: 3px !important;
+}
+.form{
+    display: none;
+    width: 50%;
+    text-align: center;
+    background-color: #99d045;
+    height: 91%;
+    position: absolute;
+    right: 30%;
+    top: 5%;
+    border: 2px solid #eee;
+    border-radius: 8px;
+}
+.disable{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.edit_btn_submit{
+    color: #131e01 !important;
+    text-align: center !important;
+    font-weight: 900 !important;
+    display: inline !important;
+    background-color: #5b8f09 !important;
+    font-size: 1.1em !important;
+    outline: 0px  !important;
+    cursor: grab   !important;
+}
+.fa-close-Editdiv{
+    position: absolute;
+    background-color: #d0e4b3;
+    padding: 5px 5px 7px;
+    color: #5b8f09;
+    cursor: pointer;
+}
+.fa-close-Editdiv :hover{
+    color:#131e01 ;
+}
+.display_contents{
+    display: contents;
+}
+.paddingTopzero{
+    padding-top: 0px !important;
+}
+.editbtn{
+    width: 80px  !important;
+    font-size: 1em  !important;
+    padding: 1px !important;
+    color: #131e01  !important;
+    font-weight: 800  !important;
+}
+.edit_div th{
+    padding: 15px 0px;
 }

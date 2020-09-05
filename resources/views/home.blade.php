@@ -7,7 +7,11 @@
 @endsection
 
 @section('navbar')
-  <li class="menu-content"><a class="loginButton" onclick="showForm()">ورود/ثبت نام</a></li>
+  @if(Session::get('userfirstName')!== null)
+    @include('profilemenu')
+  @else
+    <li class="menu-content"><a class="loginButton" onclick="showForm()">ورود/ثبت نام</a></li>
+  @endif
 @endsection
 
 @section('main-container')
@@ -64,7 +68,7 @@
       </li>
       <li class="li-student">
         <div class="card">
-          <span>علی گلوی</span>
+          <span>شقایق جاوید</span>
           <p class="title">ورودی <span class="persian-number">97</span></p>
         </div>
       </li>
@@ -91,11 +95,11 @@
     <div class="titleDiv-css"><h2>درباره سایت</h2></div>
     <div class="siteAboutDiv">
       <div class="siteAbout">
-        <p>سیستم پیش ثبت نام به شما دانشجویان عزیز کمک می کند که انتخاب واحد راحت تر و با برنامه ریزی بهتر داشته باشید.در این سیستم می توانید قبل از زمان انتخاب واحد، دروس مورد نظر خود را انتخاب کنید و مشکلات انتخاب واحد خود را با مدیر گروه محترمتان در میان بگذاریدابتدا باید در سیستم یک حساب کاربری ایجاد نمایید و در قسمت چارت، دروس پاس شده خود را مشخص کنید تا سیستم هم بتواند شما را برای انتخاب های بهتر یاری نماید.آرامش شما دانشجویان آرزوی ماست . دانشکده مهندسی کامپیوتر دانشگاه زنجان</p>
+        <p>سیستم پیش ثبت نام به شما دانشجویان عزیز کمک می کند که انتخاب واحد راحت تر و با برنامه ریزی بهتر داشته باشید.در این سیستم می توانید قبل از زمان انتخاب واحد، دروس مورد نظر خود را انتخاب کنید و مشکلات انتخاب واحد خود را با مدیر گروه مربوطه و کارشناسان در میان بگذارید.برای شاتفاده از این سیستم باید یک حساب کاربری ایجاد نمایید و در قسمت چارت، دروس پاس شده خود را مشخص کنید تا سیستم هم بتواند شما را برای انتخاب های بهتر یاری نماید.<br>آرامش شما دانشجویان آرزوی ماست <br> دانشکده مهندسی کامپیوتر دانشگاه زنجان</p>
       </div>
     </div>
     <!-- Professors Section -->
-    <div class="titleDiv-css"><h2>اساتید محترم دانشکده</h2></div>
+    <div class="titleDiv-css"><h2>اساتید دانشکده</h2></div>
     <div class="professors">
       <!-- Professor1 -->
       <div class="flip-card">
@@ -107,6 +111,7 @@
             <h2 class="paddingh2">علیرضا خان تیموری</h2>
             <h4 class="paddingh4">استادیار</h4>
             <h3 class="paddingh3">دکترای هوش مصنوعی از دانشگاه امیرکبیر</h3>
+            <p class="Professoremail">khanteymoori@znu.ac.ir</p>
           </div>
         </div>
       </div>
@@ -120,6 +125,7 @@
             <h2 class="paddingh2">اصغر تاج الدین</h2>
             <h4 class="paddingh4">استادیار</h4>
             <h3 class="paddingh3">دکترای امنیت از دانشگاه تربیت مدرس</h3>
+            <p class="Professoremail">tajoddin@znu.ac.ir</p>
           </div>
         </div>
       </div>
@@ -133,6 +139,7 @@
             <h2 class="paddingh2">سجاد حق زاد کلیدبری</h2>
             <h4 class="paddingh4">استادیار</h4>
             <h3 class="paddingh3">دکترای برق از دانشگاه صنعتی شریف</h3>
+            <p class="Professoremail">s.haghzad@znu.ac.ir</p>
           </div>
         </div>
       </div>
@@ -146,6 +153,7 @@
             <h2 class="paddingh2">محسن افشارچی</h2>
             <h4 class="paddingh4">دانشیار</h4>
             <h3 class="paddingh3"></h3>
+            <p class="Professoremail">afsharchim@znu.ac.ir</p>
           </div>
         </div>
       </div>
@@ -159,6 +167,7 @@
             <h2 class="paddingh2">مجید مقدادی</h2>
             <h4 class="paddingh4">دانشیار</h4>
             <h3 class="paddingh3">دکترای کامپیوتراز غازی ترکیه</h3>
+            <p class="Professoremail">meghdadi@znu.ac.ir</p>
           </div>
         </div>
       </div>
@@ -172,6 +181,7 @@
             <h2 class="paddingh2">علی آذرپیوند</h2>
             <h4 class="paddingh4">استادیار</h4>
             <h3 class="paddingh3">دکترای معماری دانشگاه تهران</h3>
+            <p class="Professoremail">azarpeyvand-i@znu.ac.ir</p>
           </div>
         </div>
       </div>
@@ -185,6 +195,7 @@
             <h2 class="paddingh2">داوود محمدپور</h2>
             <h4 class="paddingh4">استادیار</h4>
             <h3 class="paddingh3">دکترای نرم افزار از دانشگاه مالک اشتر</h3>
+            <p class="Professoremail">dmp@znu.ac.ir</p>
           </div>
         </div>
       </div>
@@ -198,6 +209,7 @@
             <h2 class="paddingh2">داریوش نجفی</h2>
             <h4 class="paddingh4">مربی</h4>
             <h3 class="paddingh3"></h3>
+            <p class="Professoremail">d_najaf@znu.ac.ir</p>
           </div>
         </div>
       </div>
@@ -211,6 +223,7 @@
             <h2 class="paddingh2">لیلا صفری</h2>
             <h4 class="paddingh4">استادیار</h4>
             <h3 class="paddingh3">دکترای نرم افزار از دانشگاه سیدنی</h3>
+            <p class="Professoremail">lsafari@znu.ac.ir</p>
           </div>
         </div>
       </div>
@@ -224,6 +237,7 @@
             <h2 class="paddingh2">حسین محمدی</h2>
             <h4 class="paddingh4">استادیار</h4>
             <h3 class="paddingh3">دکترای کامپیوتر از دانشگاه تهران</h3>
+            <p class="Professoremail">hosm@znu.ac.ir</p>
           </div>
         </div>
       </div>
@@ -237,9 +251,23 @@
             <h2 class="paddingh2">علی امیری</h2>
             <h4 class="paddingh4">دانشیار</h4>
             <h3 class="paddingh3">دکترای هوش مصنوعی و رباتیک از دانشگاه علم و صنعت </h3>
+            <p class="Professoremail">a_amiri@znu.ac.ir</p>
           </div>
         </div>
       </div>
+      <!-- Professor12 -->
+      {{-- <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="images/professors/azad.jpg" alt="Avatar">
+          </div>
+          <div class="flip-card-back">
+            <h2 class="paddingh2">میثم آزاد</h2>
+            <h4 class="paddingh4"></h4>
+            <h3 class="paddingh3">دکترای هوش مصنوعی </h3>
+          </div>
+        </div>
+      </div> --}}
     </div>
     <!-- Groups Employees -->
     <div class="titleDiv-css"><h2>کارمندان و کارشناسان دانشکده</h2></div>
@@ -274,37 +302,25 @@
           <div class="field-wrap">
             <label id="signin_stuNum_label">شماره دانشجویی<span class="req">*</span></label>
             <input  class="justNumber" id="signin_stuNum" name="stuNum" value="{{old('stuNum')}}" autocomplete="off"/>
-            
             <span><p id="notfound" class="p-error-css"style="color:red;margin:1px;text-align:right;float:right;display:none;">حسابی با این شماره دانشجویی وجود ندارد </p></span>
-            
-            <span>
-              <p id="stuNumlogin_error" style="color:red;margin:1px;text-align:right;float:right;display:none;"></p>
-            </span>
+            <span><p id="stuNumlogin_error" style="color:red;margin:1px;text-align:right;float:right;display:none;"></p></span>
           </div>
           {{-- password --}}
           <div class="field-wrap">
             <label id="signin_password_label">گذرواژه<span class="req">*</span></label>
             <input  id="signin_password" name="password" autocomplete="off"/>
-            
             <span><p id="incorrectPass" class="p-error-css" style="color:red;margin:1px;text-align:right;float:right;display:none;">گذرواژه اشتباه می باشد</p></span>
-            
-            <span>
-              <p id="passwordlogin_error" style="color:red;margin:1px;text-align:right;float:right;display:none;}"></p>
-            </span>
+            <span><p id="passwordlogin_error" style="color:red;margin:1px;text-align:right;float:right;display:none;}"></p></span>
           </div>
           {{-- captcha --}}
           <div class="field-captcha">
             <label  id="signin_captcha_label">عبارت امنیتی<span class="req">*</span></label>
             <input id="signin_captcha"  class="input-captcha" autocomplete="off"name="captcha">
-
             <div class="captcha captcha-div">
                 <span class="captcha-img-div">{!! captcha_img() !!}</span>
                 <button type="button" class="btn btn-success btn-refresh"><i class="fa fa-refresh"></i></button>
             </div>
-
-            <span>
-              <p id="captchalogin_error" style="color:red;margin:1px;text-align:right;float:right;display:none;"></p>
-            </span>
+            <span><p id="captchalogin_error" style="color:red;margin:1px;text-align:right;float:right;display:none;"></p></span>
           </div>
           {{-- <p class="forgot"><a href="#">آیا گذرواژه خود را فراموش کرده اید؟</a></p> --}}
           <button class="float_none button-css submitSignInuser"/><p class="submit-text-css">ورود</p></button>
@@ -318,7 +334,7 @@
               <!-- firstName -->
               <div class="field-wrap">
                 <label id="signup_firstname_label">نام<span class="req">*</span></label>
-                <input name="firstName"  id="signup_firstname" value="{{ old('firstName') }}" autocomplete="off" />
+                <input style="font-size: 1.4em;" name="firstName"  id="signup_firstname" value="{{ old('firstName') }}" autocomplete="off" />
                 <span>
                   <p id="firstName_error" style="color:red;margin:1px;text-align:right;float:right;display:none;}"></p>
                 </span>
@@ -326,7 +342,7 @@
               <!-- lastName -->
               <div class="field-wrap">
                   <label id="signup_lastname_label">نام خانوادگی<span class="req">*</span></label>
-                  <input name="lastName" id="signup_lastname" dir="rtl"  value="{{ old('lastName') }}" autocomplete="off"/>
+                  <input style="font-size: 1.4em;" name="lastName" id="signup_lastname" dir="rtl"  value="{{ old('lastName') }}" autocomplete="off"/>
                   <span>
                     <p id="lastName_error" style="color:red;margin:1px;text-align:right;float:right;display:none;}"></p>
                   </span>
@@ -394,7 +410,7 @@
     $sn = $("#signup_stuNum").val();
     $p = $("#signup_password").val();
     $cp = $("#confirmPassword").val();
-
+    
     e.preventDefault();
 
     $.ajax({
@@ -474,7 +490,7 @@
     $sn = $("#signin_stuNum").val();
     $p = $("#signin_password").val();
     $cp = $("#signin_captcha").val();
-
+    
     e.preventDefault();
 
     $.ajax({
@@ -495,7 +511,7 @@
           $('.head-container').removeClass('disable'); 
           $('.page-footer').removeClass('disable');
           localStorage.removeItem("selectedCoursesIDInAvailablePage");
-          window.location.replace("/select");
+          window.location.replace("/");
         }
         else if($.trim(data) != "") {
           data = JSON.parse(data);

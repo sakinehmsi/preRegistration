@@ -1,29 +1,29 @@
 
 @font-face {
-    font-family: 'BNarm';
-    src: url('BNarm.eot?#') format('eot'),
-    url('BNarm.ttf') format('truetype'),
-    url('BNarm.woff') format('woff');
+    font-family: 'BMitra';
+    src: url('BMitra.eot?#') format('eot'),
+    url('BMitra.ttf') format('truetype'),
+    url('BMitra.woff') format('woff');
 }
 @font-face {
   font-family: 'BioRhyme';
   font-style: normal;
-  font-weight: 400;
   src: local('BioRhyme'), local('BioRhyme-Regular'), url('BioRhyme.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 body {
-    font-family: 'BNarm' !important;
-    font-weight: 100;
+    font-family: 'BMitra' !important;
+    font-weight: 600;
     text-align: -webkit-center;
     overflow-y: auto;
     direction: rtl !important;
+    font-size: large !important;
 }
 a, p, button, h {
-	font-family: 'BNarm';
+	font-family: 'BMitra';
 }
 .znu-name{
-    font-family: 'BNarm';
+    font-family: 'BMitra';
     padding-top: 25px;
     padding-right: 10px;
     font-size: 28px;
@@ -119,14 +119,14 @@ body{
     color: #072339;
     text-decoration: none;
     cursor: pointer; 
-    font-size: 20px; 
+    font-size: x-large; 
     padding-bottom: 7px;
 }
 .newmenu a{
     color: white;
     text-decoration: none;
     cursor: pointer; 
-    font-size: 20px; 
+    font-size: x-large; 
     padding-bottom: 7px;
 }
 .page-menu li{
@@ -158,7 +158,7 @@ body{
 .page-date #date{
     color: #072339;
     cursor: default;
-    font-size: 20px; 
+    font-size: x-large;
     margin: 0 !important;
     float: left;
     padding-left: 25px;
@@ -166,7 +166,7 @@ body{
 .newdate #date{
     color: white; 
     cursor: default;
-    font-size: 20px; 
+    font-size: x-large; 
     margin: 0 !important;
     float: left;
     padding-left: 25px;
@@ -218,17 +218,19 @@ body{
 .new_dropdown_content a:hover {color: rgb(31, 225, 231);}
 .dropdown_content a {
     color: #072339;
-    padding: 4.5px 10px ;
+    padding: 6px 18px 6px 51px;
     text-decoration: none;
     display: block;
-    font-weight: normal;
+    font-size: x-large;
+    font-weight: 600;
 }
 .new_dropdown_content a {
     color: white ;
-    padding:9px 10px ;
+    padding:6px 18px 6px 51px;
     text-decoration: none;
     display: block;
-    font-weight: normal;
+    font-size: x-large;
+    font-weight: 600;
 }
 /*  END HEADER */
 

@@ -10,7 +10,7 @@ class Lesson extends Model
     public $incrementing = false;
     protected $fillable = [
         'lesson_name','lesson_id', 'professor_name', 'kind_of_lesson', 'class_day', 
-        'class_time', 'class_day_two',  'class_time_two', 'vahed', 'exam_date', 'exam_time' ,'main_id', 'sexuality'
+        'class_time_start','class_time_end', 'class_day_two',  'class_time_two_start', 'class_time_two_end' , 'vahed', 'exam_date', 'exam_time_start' , 'exam_time_end' ,'main_id', 'sexuality'
     ];
     
 }

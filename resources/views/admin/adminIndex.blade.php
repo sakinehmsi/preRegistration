@@ -9,18 +9,20 @@
         {{-- <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'> --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/admin.css">
-        <link rel="stylesheet" href="css/addlesson.css">
+        {{-- <link rel="stylesheet" href="css/addlesson.css"> --}}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <link href="css/bootstrap.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
         <link rel="stylesheet" href="css/jquery.Bootstrap-PersianDateTimePicker.css" />
-        <script src="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
-        <link href="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
+        {{-- {{-- <script src="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script> --}}
+        <link href="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/> 
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     </head>
     <body>
         @yield('main')
         <script src="js/jquery.min.js"></script>
         <script src="js/sweetalert2.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
         @yield('script')
     </body>
 </html>

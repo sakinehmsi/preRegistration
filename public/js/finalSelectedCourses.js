@@ -39,9 +39,6 @@ $('.close').on('click',() =>{
 for (var index = 0; index < prerequisitesCourses.length; index++) {
     $('.popup').append(prerequisitesCourses[index]);
 } 
-//go_to_overbid
-$('#go_to_overbid').click(function(){
-	window.location.assign('/overbid')
-});
+
 
 

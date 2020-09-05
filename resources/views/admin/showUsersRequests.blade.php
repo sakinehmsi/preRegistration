@@ -3,14 +3,13 @@
 @section('main')
     <!-- menu section -->
     <div class="menuDiv">
-        <div class="searchInputDiv">
-            <p>{{ Session::get('userfirstName')}} {{ Session::get('userlastName')}}</p>            
-        </div>
+        <div class="searchInputDiv"><p>{{ Session::get('userfirstName')}} {{ Session::get('userlastName')}}</p></div>
         <div class="menu_content_div">
             <a class="a_action" href="{{route('usersRequests')}}">اتاق صحبت با دانشجویان</a>
-            <a class="a_action" href="{{route('addlesson')}}">ویرایش درس</a>
-            <a class="a_action" href="{{route('showaddlesson')}}">افزودن درس</a>
-            <a class="a_action" href="{{route('logout')}}">خروج</a>
+            <a class="a_action" href="{{route('showeditlesson')}}">ویرایش دروس ارائه شده</a>
+            <a class="a_action" href="{{route('showaddlesson')}}">ارائه دروس</a>
+            <a class="a_action" href="{{route('show_user_PreReg_Detail')}}">اطلاعات پیش ثبت نام</a>
+            <a class="a_action" href="{{route('Adminlogout')}}">خروج</a>
         </div>
     </div>
      <!-- user_request_div -->
@@ -53,7 +52,6 @@
                 url: "{{route('refresh_ChatRoom_admin')}}",
                 dataType:'json',
                 success: function(data) {
-                    
                     var html_refresed_ChatRoom =''; 
                     var length = data.length;
                     for(var i = length-1; i>=0 ; i--){
@@ -78,7 +76,7 @@
                 }
             });
         });
-
+        
         function set_reply(id){
             $('.request_content_container').css('background-color' , '#0a304e');
             $('.request_content_darker').css('background-color' , '#808000');
@@ -108,7 +106,7 @@
                     icon: 'error',
                     title: 'ادمین عزیز متاسفانه سیستم با مشکل مواجه شده است.لطفا بعدا امتحان کنید',
                     showConfirmButton: false,
-                    timer: 5000
+                    timer: 2000
                     });
                 }
             }); 

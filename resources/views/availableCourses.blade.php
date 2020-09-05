@@ -11,7 +11,6 @@
 @endsection
 
 @section('main-container')
-
     <div class="mainHead-css">
         <!--colleges-->
         {{-- <div class="selsct1_div_css">
@@ -76,7 +75,6 @@
         <!--END Terms--> 
         <p class="selected_title">دروس انتخابی شما</p>       
     </div>
-
     <form action="/selectedCourses" method="post" id="selectedCoursesForm">        
         <!-- Courses -->
         <div class="table">
@@ -86,7 +84,7 @@
                 <table id="courses-table">
                     <tbody>
                         @foreach ($courses as $course) 
-                            <tr id='{{$course->lesson_id}}' onclick="trclick('{{$course->lesson_id}}','{{$course->lesson_name}}','{{$course->vahed}}')">
+                            <tr id='{{$course->main_id}}' onclick="trclick('{{$course->lesson_id}}','{{$course->lesson_name}}','{{$course->vahed}}','{{$course->main_id}}')">
                                 <td>
                                     <span  class='coursename-css' >{{$course->lesson_name}}</span>
                                     <span  class='coursekind-css'>{{$course->kind_of_lesson}}</span>
@@ -119,8 +117,7 @@
             <button type="button" class="button-css"><p class="submit-text-css">بازگشت</p></button>
             <button type="button" onclick="submitSelectedCourses()" class="button-css"><p class="submit-text-css">ثبت تغییرات</p></button>
         </div>
-    </form>   
-
+    </form>  
 @endsection
 
 @section('script')

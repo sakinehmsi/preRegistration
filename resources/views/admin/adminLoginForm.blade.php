@@ -8,30 +8,22 @@
             <label id="signin_stuNum_label">شماره کاربری<span class="req">*</span></label>
             <input  class="justNumber" id="signin_stuNum" name="stuNum" value="{{old('stuNum')}}" autocomplete="off"/>
             
-            <span><p id="incorrectstuNum" class="p-error-css"style="color:red;margin:1px;text-align:center;display:none;">شماره کاربری اشتباه می باشد</p></span>
-            
-            <span>
-                <p id="stuNumlogin_error" style="color:red;margin:1px;text-align:center;display:none;"></p>
-            </span>
+            <span><p id="incorrectstuNum" style="color:red;margin:1px;text-align:center;font-weight: 600;display:none;">شماره کاربری  واردشده صحیح نمی باشد</p></span>
+            <span><p id="stuNumlogin_error" style="color:red;margin:1px;text-align:center;font-weight: 600;display:none;"></p></span>
         </div>
         {{-- password --}}
         <div class="field-wrap">
             <label id="signin_password_label">گذرواژه<span class="req">*</span></label>
             <input  id="signin_password" name="password" autocomplete="off"/>
             
-            <span><p id="incorrectPass" class="p-error-css" style="color:red;margin:1px;text-align:center;display:none;">گذرواژه اشتباه می باشد</p></span>
-            
-            <span>
-                <p id="passwordlogin_error" style="color:red;margin:1px;text-align:center;display:none;}"></p>
-            </span>
+            <span><p id="incorrectPass"style="color:red;margin:1px;text-align:center;font-weight:600;display:none;">گذرواژه واردشده صحیح نمی باشد</p></span>
+            <span><p id="passwordlogin_error" style="color:red;margin:1px;text-align:center;font-weight: 600;display:none;}"></p></span>
         </div>
         {{-- captcha --}}
         <div class="field-captcha">
             <label  id="signin_captcha_label">عبارت امنیتی<span class="req">*</span></label>
             <input id="signin_captcha"  class="input-captcha" autocomplete="off"name="captcha">
-            <span>
-                <p id="captchalogin_error" style="color:red;margin:1px;text-align:center;;display:none;"></p>
-            </span>
+            <span><p id="captchalogin_error" style="color:red;margin:1px;text-align:center;font-weight: 600;display:none;"></p></span>
 
             <div class="captcha">
                 <span class="captcha-img-div">{!! captcha_img() !!}</span>
@@ -58,6 +50,9 @@
         $('.submitSignInuser').click(function(e){
             $("#incorrectPass").css("display", "none");
             $("#incorrectstuNum").css("display", "none");
+            $("#stuNumlogin_error").css("display", "none");
+            $("#passwordlogin_error").css("display", "none");
+            $("#captchalogin_error").css("display", "none");
 
             $.ajax({
                 type:'GET',
@@ -95,15 +90,15 @@
                             if(data.stuNum != undefined){
                                 $("#stuNumlogin_error").html(data.stuNum).css("display", "inline-block");
                             }
-                            if(data.password != undefined){
+                            if(data.password != undefined ){
                                 $("#passwordlogin_error").html(data.password).css("display", "inline-block");
                             }
                             if(data.captcha != undefined){
                                 $("#captchalogin_error").html(data.captcha).css("display", "inline-block");
                             } 
                             if(data.stuNum == undefined && data.incorrectstuNum != undefined && data.incorrectstuNum == "1"){
-                            $("#stuNumlogin_error").html(data.stuNum).css("display", "none");
-                            $("#incorrectstuNum").html(data.stuNum).css("display", "inline-block");
+                                $("#stuNumlogin_error").html(data.stuNum).css("display", "none");
+                                $("#incorrectstuNum").html(data.stuNum).css("display", "inline-block");
                             }
                             if(data.password == undefined && data.incorrectPass != undefined &&  data.incorrectPass == "1"){
                                 $("#passwordlogin_error").html(data.stuNum).css("display", "none");

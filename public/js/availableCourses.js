@@ -9,16 +9,16 @@ if(total_selected_units ==  0){
     $('.selected_div_top_error').css('display', 'none');
 }
 //trclick Function
-function trclick(id,name, unit){
-    if( !($("#"+id).hasClass('selected')) ){
-        var htmlfield = '<div id="selectedCourse_'+id+'" class="selected-textbox"><p>'+ name +'</p><div onclick="unselect(' +"'"+ id +"'"+','+"'"+name+"'" +','+"'"+unit+"'" + ')" class="fa-close-div"><i class="fa fa-times" ></i></div></div>';
+function trclick(id,name, unit, mainId){
+    if( !($("#"+mainId).hasClass('selected')) ){
+        var htmlfield = '<div id="selectedCourse_'+mainId+'" class="selected-textbox"><p>'+ name +'</p><div onclick="unselect(' +"'"+ id +"'"+','+"'"+name+"'" +','+"'"+unit+"'" +','+"'"+mainId+"'" + ')" class="fa-close-div"><i class="fa fa-times" ></i></div></div>';
         $('.selected-content-div').append(htmlfield);        
 
-        $("#"+id).addClass('selected');
+        $("#"+mainId).addClass('selected');
         selectedCourses.push(name);
         $("#selectedCourses").val(selectedCourses.toString());
         
-        selectedCoursesID.push(id);
+        selectedCoursesID.push(mainId);
         $("#selectedCoursesID").val(selectedCoursesID.toString());
         
         total_selected_units = total_selected_units + parseInt(unit);
@@ -33,13 +33,13 @@ function trclick(id,name, unit){
     }
 }
 // unselect Function
-function unselect(id, name, unit) {
-    $("#selectedCourse_"+id).remove();
-    $("#"+id).removeClass('selected');
+function unselect(id, name, unit, mainId) {
+    $("#selectedCourse_"+mainId).remove();
+    $("#"+mainId).removeClass('selected');
     removeElement(selectedCourses, name);
     $("#selectedCourses").val(selectedCourses.toString());
     
-    removeElement(selectedCoursesID, id);
+    removeElement(selectedCoursesID, mainId);
     $("#selectedCoursesID").val(selectedCoursesID.toString());
     
     // console.log(selectedCourses);
@@ -102,14 +102,13 @@ function submitSelectedCourses() {
             icon: 'error',
             title: "لطفا ابتدا دروس مورد نظر خود را انتخاب کنید",
             showConfirmButton: true,
-            timer: 10000, 
+            timer: 3000, 
             confirmButtonText:'بستن',
         });
     }  
     else{
         localStorage.setItem("selectedCoursesInAvailablePage", selectedCourses); 
         localStorage.setItem("selectedCoursesIDInAvailablePage", selectedCoursesID);
-        // console.log(selectedCourses);
         $("#selectedCoursesForm").submit();
     }
 }
