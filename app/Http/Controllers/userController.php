@@ -475,11 +475,12 @@ class userController extends Controller
     }
     //chatRoom
     public function showUsersRequestsPage(){
-       $chatRoom =  DB::connection('mongodb')->collection('preRegistration_chatRoom')->get();
+       $chatRoom =  DB::connection('mongodb')->collection('preRegistration_chatRoom')->orderBy('_id', 'DESC')->take(10)->get();
        $id =  Session::get('userid');
        $request_content =  DB::connection('mongodb')->collection('preRegistration_chatRoom')->where('sender' , ''.$id.'')->get() ;
+       $pinnedMessages = DB::connection('mongodb')->collection('pinnedMessages')->orderBy('_id', 'DESC')->take(10)->get();
        if(session('userfirstName') != ''){
-          return view('userRequest')->with('chatRoom', $chatRoom)->with('request_content', $request_content);
+          return view('userRequest')->with('chatRoom', $chatRoom)->with('request_content', $request_content)->with('pinnedMessages', $pinnedMessages);
        }else{
           return redirect('');
        }  
@@ -493,7 +494,7 @@ class userController extends Controller
         );
     }
     public function refresh_ChatRoom(){
-        $refreshed_data =  DB::connection('mongodb')->collection('preRegistration_chatRoom')->orderBy('_id', 'DESC')->take(20)->get();
+        $refreshed_data =  DB::connection('mongodb')->collection('preRegistration_chatRoom')->orderBy('_id', 'DESC')->take(10)->get();
        
         if(session('userfirstName') != ''){
             return $refreshed_data ;
@@ -543,6 +544,15 @@ class userController extends Controller
         }else{
             return redirect('');
         }  
+    }
+    public function refresh_pinnedMessages(){
+        $pinnedMessages =  DB::connection('mongodb')->collection('pinnedMessages')->orderBy('_id', 'DESC')->take(20)->get();
+       
+        if(session('userfirstName') != ''){
+            return $pinnedMessages ;
+        }else{
+            return redirect('');
+        } 
     }
     //logout
     public function logout(Request $request){

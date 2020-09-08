@@ -10,6 +10,22 @@
 @endsection
 
 @section('main-container')
+    <!-- pinnedMessages section -->
+    <div class="pinnedMessagesDiv">
+        <div class="user_request_top">
+            <p class="user_request_top_p">پیام های سنجاق شده</p>
+            <i id="refresh_pinnedMessages" class="fa fa-refresh" aria-hidden="true"></i>
+        </div>
+        <div class="pinnedMessages_content">
+            <?php
+                for ($i = count($pinnedMessages)-1; $i >= 0 ;$i--) {
+                    echo " <div class='pinnedMessages_container'>";
+                    echo " <p>".$pinnedMessages[$i]['message']."</p></div>";
+                }
+            ?>
+        </div>
+    </div>
+
     <!-- search section -->
     <div class="searchDiv">
         <div class="searchInputDiv">
@@ -27,7 +43,7 @@
         <script>var $chatRoom_content;</script>
         <div class="requestsList_content">
             <?php
-                for ($i = 0; $i<count($chatRoom); $i++) {
+                for ($i = count($chatRoom)-1;$i >= 0; $i--) {
                     echo"<div class='container'>";
                     echo"<p class='sender'>".$chatRoom[$i]['sender']."</p>";
                     echo"<p>".$chatRoom[$i]['message']."</p>";
@@ -121,14 +137,6 @@
                     window.setTimeout(function () {
                         $('#refresh_chatRoom').removeClass('fa-spin');
                     }, 2000);
-                },
-                error:function(data) {
-                    Swal.fire({
-                    icon: 'error',
-                    title: 'دانشجوی عزیز متاسفانه سیستم با مشکل مواجه شده است.لطفا بعدا امتحان کنید',
-                    showConfirmButton: false,
-                    timer: 5000
-                    });
                 }
             });
         });
@@ -152,14 +160,6 @@
                     window.setTimeout(function () {
                         $('#refresh_user_messages').removeClass('fa-spin');
                     }, 2000);
-                },
-                error:function(data) {
-                    Swal.fire({
-                    icon: 'error',
-                    title: 'دانشجوی عزیز متاسفانه سیستم با مشکل مواجه شده است.لطفا بعدا امتحان کنید',
-                    showConfirmButton: false,
-                    timer: 3000
-                    });
                 }
             });
         });
@@ -205,10 +205,38 @@
                 }
             });  
         });
+        $('#refresh_pinnedMessages').click(function(e){
+            $('#refresh_pinnedMessages').addClass('fa-spin');
+            $.ajax({
+                type: "GET",
+                url: "{{route('refresh_pinnedMessages')}}",
+                dataType:'json',
+                success: function(data) {
+                    var html_refresh_pinnedMessages =''; 
+                    var length = data.length;
+                    for(var i = length-1 ; i>=0 ; i--){
+                        html_refresh_pinnedMessages += "<div class='pinnedMessages_container'><p>"+data[i].message+"</p></div>" ;
+                    }
+                    $('.pinnedMessages_content').html(html_refresh_pinnedMessages);
+                    window.setTimeout(function () {
+                        $('#refresh_pinnedMessages').removeClass('fa-spin');
+                    }, 2000);
+                }
+            });
+        });
         window.setTimeout(function () {
             $(".requestsList_content").scrollTop($('.requestsList_content')[0].scrollHeight);
             $(".searchResultDiv").scrollTop($('.searchResultDiv')[0].scrollHeight);
             $(".user_request_content").scrollTop($('.user_request_content')[0].scrollHeight);
         }, 1000);
+        setInterval(function(){
+            $('#refresh_chatRoom').click();
+        },50000);
+        setInterval(function(){
+            $('#refresh_user_messages').click();
+        },10000);
+        setInterval(function(){
+            $('#refresh_pinnedMessages').click();
+        },10000);
     </script>
 @endsection

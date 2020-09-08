@@ -16,6 +16,7 @@ Route::post('/send_request','userController@send_request')->name('send_request')
 Route::get('/refresh_ChatRoom','userController@refresh_ChatRoom')->name('refresh_ChatRoom');
 Route::get('/refresh_user_messages','userController@refresh_user_messages')->name('refresh_user_messages');
 Route::post('/search_input','userController@search_input')->name('search_input');
+Route::get('/refresh_pinnedMessages','userController@refresh_pinnedMessages')->name('refresh_pinnedMessages');
 //pre Registration 
 Route::get('/availableCourses','userController@showavailableCourses')->name('availableCourses');
 Route::post('/selectedCourses','userController@sendselectedCourses')->name('selectedCourses');
@@ -38,6 +39,7 @@ Route::get('/Adminlogout','adminController@logout')->name('Adminlogout');
 Route::get('/refresh_ChatRoom_admin','adminController@refresh_ChatRoom_admin')->name('refresh_ChatRoom_admin');
 Route::get('/usersRequests','adminController@showUsersRequests')->name('usersRequests');
 Route::post('/send_response','adminController@send_response')->name('send_response');
+Route::get('/refresh_adminPm','adminController@refresh_adminPm')->name('refresh_adminPm');
 //add lesson
 Route::get('/addlesson','adminController@showaddlesson')->name('showaddlesson');
 Route::post('/addlesson','adminController@addlesson')->name('addlesson');

@@ -74,9 +74,10 @@ class adminController extends Controller
     }
     //chat Room
     public function showUsersRequests(){
-        $chatRoom =  DB::connection('mongodb')->collection('preRegistration_chatRoom')->orderBy('_id', 'DESC')->take(20)->get() ;
+        $chatRoom =  DB::connection('mongodb')->collection('preRegistration_chatRoom')->orderBy('_id', 'DESC')->take(20)->get();
+        $myPinnedMessage =  DB::connection('mongodb')->collection('pinnedMessages')->orderBy('_id', 'DESC')->take(20)->get();
         if(session('userfirstName') != ''){
-            return view('admin.showUsersRequests')->with('chatRoom' ,  $chatRoom);
+            return view('admin.showUsersRequests')->with('chatRoom' ,  $chatRoom)->with('myPinnedMessage' ,  $myPinnedMessage);
         }else{
             return redirect('AdminLogin');
         } 
@@ -91,13 +92,27 @@ class adminController extends Controller
     } 
     public function send_response(){
         $id = $_POST['id'];
-        DB::connection('mongodb')->collection('preRegistration_chatRoom')->where('_id' , ''.$id.'')->update( 
-            [
-             'reply_message' => $_POST['reply_message'], 
-             'reply_message_id' => $_POST['reply_message_id'], 
-            ]
-        );
+        if($id != ""){
+            DB::connection('mongodb')->collection('preRegistration_chatRoom')->where('_id' , ''.$id.'')->update( 
+                [
+                 'reply_message' => $_POST['reply_message'], 
+                 'reply_message_id' => $_POST['reply_message_id'], 
+                ]
+            );
+        }else{
+            DB::connection('mongodb')->collection('pinnedMessages')->insert(
+                ['message' => $_POST['reply_message']]
+            );
+        }
     }
+    public function refresh_adminPm(){
+        $refreshed_adminPm =  DB::connection('mongodb')->collection('pinnedMessages')->orderBy('_id', 'DESC')->take(20)->get();
+        if(session('userfirstName') != ''){
+            return $refreshed_adminPm ;
+        }else{
+            return redirect('AdminLogin');dd($myPinnedMessage);
+        }  
+    } 
     //add lesson
     public function showaddlesson(){
         if(session('userfirstName') != ''){

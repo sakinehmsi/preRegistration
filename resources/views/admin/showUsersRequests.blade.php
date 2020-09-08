@@ -16,8 +16,9 @@
     <div class="user_request_div">
         <div class="user_request_top">
             <p class="user_request_top_p">اتاق صحبت با دانشجویان</p>
-            <i id="refresh_chatRoom" class="fa fa-refresh btn_refresh" aria-hidden="true"></i>
+            <i id="refresh_chatRoom" class="fa fa-refresh btn_refresh" aria-hidden="true"></i>            
         </div>
+
         <div class="user_request_content">
             <?php
                 for($i = count($chatRoom)-1 ; $i >=0  ; $i--){
@@ -31,7 +32,7 @@
                 }
             ?>
         </div>
-        {{-- requestSendingBox --}}
+
         <div  class="requestSendingBox">                
             <form action="/action_page.php" class="form_container">
                 <input id="userid_input" type="hidden" value="{{ Session::get('userid')}}">
@@ -41,10 +42,30 @@
             </form>
         </div>
     </div>
+    
+    <div style="background-color: #eeeeee;float: left;width: 33%;height:100%;">
+        <div class="myPinMessage_top">
+            <p>پیام های سنجاق شده</p>            
+            <i id="refresh_adminPm" class="fa fa-refresh btn_refresh" aria-hidden="true"></i>           
+        </div>            
+        <div class="MypinnedMessage">
+            <?php 
+                for($i = count($myPinnedMessage)-1; $i >= 0 ; $i--){
+                echo "<div class='request_content_container request_content_darker'><p>".$myPinnedMessage[$i]['message']."</p></div>";
+                }
+            ?>
+        </div>
+    </div>
 @endsection
 
 @section('script')
     <script>
+        setInterval(function(){
+            if(!($("#myRequest").is(":focus"))){
+                $('#refresh_chatRoom').click();
+            }  
+        },10000);
+
         $('#refresh_chatRoom').click(function(e){
             $('#refresh_chatRoom').addClass('fa-spin');
             $.ajax({
@@ -65,18 +86,30 @@
                     window.setTimeout(function () {
                         $('#refresh_chatRoom').removeClass('fa-spin');
                     }, 2000);
-                },
-                error:function(data) {
-                    Swal.fire({
-                    icon: 'error',
-                    title: 'ادمین عزیز متاسفانه سیستم با مشکل مواجه شده است.لطفا بعدا امتحان کنید',
-                    showConfirmButton: false,
-                    timer: 5000
-                    });
                 }
             });
         });
         
+        $('#refresh_adminPm').click(function(e){
+            $('#refresh_adminPm').addClass('fa-spin');
+            $.ajax({
+                type: "GET",
+                url: "{{route('refresh_adminPm')}}",
+                dataType:'json',
+                success: function(data) {
+                    var html_refresed_myMessage =''; 
+                    var length = data.length;
+                    for(var i = length-1; i>=0 ; i--){
+                        html_refresed_myMessage += "<div class='request_content_container request_content_darker'><p>"+data[i].message+"</p></div>" ;
+                    }
+                    $('.MypinnedMessage').html(html_refresed_myMessage);
+                    window.setTimeout(function () {
+                        $('#refresh_adminPm').removeClass('fa-spin');
+                    }, 2000);
+                }
+            });
+        });
+
         function set_reply(id){
             $('.request_content_container').css('background-color' , '#0a304e');
             $('.request_content_darker').css('background-color' , '#808000');
@@ -98,13 +131,14 @@
                 dataType: "text",
                 
                 success: function(data) {
-                    $('#myRequest').val("");
+                    $('#myRequest').val('');
                     $('#refresh_chatRoom').click();
+                    $('#refresh_adminPm').click();
                 },
                 error:function(data) {
                     Swal.fire({
                     icon: 'error',
-                    title: 'ادمین عزیز متاسفانه سیستم با مشکل مواجه شده است.لطفا بعدا امتحان کنید',
+                    title: 'پیام ارسال نشد',
                     showConfirmButton: false,
                     timer: 2000
                     });
